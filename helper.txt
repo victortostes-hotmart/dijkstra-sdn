@@ -1,0 +1,25 @@
+DOCKER MAX DEEPTH
+docker rmi -f $(docker images -a -q)
+
+INSTALL BRIDGE-UTILS
+
+sudo apt-get update -y
+sudo apt-get install -y bridge-utils
+
+apt-get update -y && apt-get install -y bridge-utils
+
+BEFORE ALL:
+cd ..
+
+MININET FORCE CLEANUP:
+mn -c
+
+RUNNING TRADITIONAL TOPOLOGY:
+
+mn -c && python network/traditional/triangular.py
+mn -c && python network/traditional/custom.py
+
+RUNNING SDN TOPOLOGY:
+
+mn -c && python network/sdn/triangular.py
+mn -c && python network/sdn/custom.py

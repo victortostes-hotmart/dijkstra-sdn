@@ -1,0 +1,44 @@
+version: '3.9'
+
+services:
+  sdn-controller:
+    container_name: sdn-controller
+    image: python:2.7-alpine
+    build: 
+      context: ./controller
+      dockerfile: ./Dockerfile
+    environment:
+     - POX_VERSION=dart
+    ports:
+      - 6633:6633
+    volumes:
+      - ./controller/custom:/usr/src/pox/ext
+      - ./controller/entrypoint.sh:/usr/src/app/entrypoint.sh
+    networks:
+      tcc:
+        ipv4_address: 172.16.238.12
+  
+  mininet:
+    container_name: mininet
+    image: iwaseyusuke/mininet
+    tty: true
+    privileged: true
+    environment:
+     - DISPLAY
+    volumes:
+     - /tmp/.X11-unix:/tmp/.X11-unix
+     - /lib/modules:/lib/modules
+     - ./network:/network
+    networks:
+      tcc:
+        ipv4_address: 172.16.238.10
+
+networks:
+  tcc:
+    driver: bridge
+    enable_ipv6: false
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.16.238.0/24
+          gateway: 172.16.238.1

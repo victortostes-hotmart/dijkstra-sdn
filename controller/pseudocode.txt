@@ -1,0 +1,17 @@
+dijkstra (G, S) {
+	para todo vertice V em G:
+  		dist[V] <- infinito;
+  		pre[V] <- nulo;
+		se V != S, adiciona V na fila de prioridade Q
+     
+  	dist[S] <- 0
+    enquanto Q != vazio
+      	U <- menor estimativa dentro de Q;
+      	para cada vizinho nao visitado de U:
+  			distancia <- dist[U] + custo(U,V);
+      		se distancia < dist[V]
+            	dist[v] <- distancia;
+      			pre[V] <- U;
+    
+     returna dist[], prev[];
+ }
