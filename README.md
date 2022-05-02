@@ -14,14 +14,13 @@ An SDN forwarding packets strategy based on Dijkstra algorithm to find shortest 
 
 ## Setup
 
-After clone this repository, start services with [Docker](https://www.docker.com/) and [Docker Compose](https://docs.docker.com/compose/):
-
+After clone this repository, start [Docker](https://www.docker.com/) services with [Docker Compose](https://docs.docker.com/compose/):
 
 ```ssh
 docker-compose up -d
 ```
 
-Check out logs container logs with:
+Check out container logs with:
 
 ```ssh
 docker-compose logs -f --tail=200 mininet sdn-controller
@@ -29,18 +28,20 @@ docker-compose logs -f --tail=200 mininet sdn-controller
 
 ## Running
 
-The controller interface will be exposed on address `172.16.238.12:6633`, make sure your [Mininet](https://mininet.org) network points to the correct address.
+Crate your [Mininet] topology file on [`/network`](https://github.com/victortostes-hotmart/dijkstra-sdn/tree/main/network) folder;
 
-Enter on [Mininet](https://mininet.org) container with:
+Once you've started the controller service its interface will be exposed on address `172.16.238.12:6633`, make sure your network points to the correct address.
+
+Enter on [Mininet](http://mininet.org) container with:
 
 ```ssh
 docker-compose exec mininet bash
 ```
 
-Once you're inside, run your tests with:
+Then, run your tests with:
 
 ```ssh
-mn -c && python network/YOUR_TOPOLOGY_FILE.py
+mn -c && python network/PATH_TO_YOUR_TOPOLOGY_FILE.py
 ```
 
 Here is some examples:
