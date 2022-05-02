@@ -28,9 +28,9 @@ docker-compose logs -f --tail=200 mininet sdn-controller
 
 ## Running
 
-Crate your [Mininet] topology file on [`/network`](https://github.com/victortostes-hotmart/dijkstra-sdn/tree/main/network) folder;
+Create your [Mininet](http://mininet.org) topology file on [`/network`](https://github.com/victortostes-hotmart/dijkstra-sdn/tree/main/network) folder;
 
-Once you've started the controller service its interface will be exposed on address `172.16.238.12:6633`, make sure your network points to the correct address.
+Controller service interface will be exposed on address `172.16.238.12:6633`, make sure your network points to the correct address.
 
 Enter on [Mininet](http://mininet.org) container with:
 
@@ -65,7 +65,6 @@ mn -c && python network/sdn/custom.py
 Comparing built controller with traditional Ethernet network packet forwarding strategy using STP protocol.
 
 To be defined.
-
 
 <sub>
 Authored by Victor Tostes - UFMG
