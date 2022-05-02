@@ -1,10 +1,12 @@
-from Queue import PriorityQueue
+from Queue import PriorityQueue;
+from collections import defaultdict;
 
 class Graph:
   def __init__(self):
     self.v = 0;
     self.edges = [];
     self.nodes = {};
+    self.adjacency = defaultdict(lambda : defaultdict(lambda : None));
 
   def add_node(self, node):
     if node in self.nodes:
@@ -19,11 +21,20 @@ class Graph:
     
     self.edges.append([-1 for i in range(self.v)]);
   
-  def add_edge(self, u, v, weight = 1):
-    self.edges[u - 1][v - 1] = weight;
+  def add_edge(self, sw1, sw2, pt1, pt2, weight = 1):
+    self.edges[sw1 - 1][sw2 - 1] = weight;
+    
+    if self.adjacency[sw1][sw2] is None:
+      self.adjacency[sw1][sw2] = pt1;
+      self.adjacency[sw2][sw1] = pt2;
 
-  def remove_edge(self, u, v):
-    self.edges[u - 1][v - 1] = -1;
+  def remove_edge(self, sw1, sw2):
+    self.edges[sw1 - 1][sw2 - 1] = -1;
+    
+    if sw2 in self.adjacency[sw1]:
+        del self.adjacency[sw1][sw2];
+    if sw1 in self.adjacency[sw2]:
+        del self.adjacency[sw2][sw1];
 
   def dijkstra(self, start_vertex):
     visited = [];
@@ -50,7 +61,6 @@ class Graph:
               S[neighbor + 1]['distance'] = new_cost;
               S[neighbor + 1]['prev'] = current_vertex;
 
-    
     paths = {};
     for node in S:
       path = [];
@@ -63,3 +73,26 @@ class Graph:
       paths[node] = path;
 
     return paths;
+
+  def find_shortest_path(self, src, dst):
+      switch_src = src[0];
+      port_src = src[1];
+
+      switch_dst = dst[0];
+      port_dst = dst[1];
+
+      # Find shortest path to all graph nodes starting from source switch;
+      routes = self.dijkstra(switch_src);
+      switches_path = routes[switch_dst];
+      
+      path = [];
+      in_port = port_src;
+      
+      for s1,s2 in zip(switches_path[:-1],switches_path[1:]):
+          out_port = self.adjacency[s1][s2];
+          path.append((s1,in_port,out_port));
+          in_port = self.adjacency[s2][s1];
+      
+      path.append((switch_dst,in_port,port_dst));
+
+      return path;
