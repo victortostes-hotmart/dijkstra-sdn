@@ -20,7 +20,9 @@ services:
   
   mininet:
     container_name: mininet
-    image: iwaseyusuke/mininet
+    build: 
+      context: ./network
+      dockerfile: Dockerfile
     tty: true
     privileged: true
     environment:

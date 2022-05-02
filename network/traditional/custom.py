@@ -1,4 +1,5 @@
-#!/usr/bin/python                                                                            
+#!/usr/bin/python
+import time;                                                                           
                                                                                              
 from mininet.topo import Topo
 from mininet.net import Mininet
@@ -77,8 +78,9 @@ def create_network():
   )
 
   network.start()
-  network.pingAll()
-  
+  time.sleep(30)
+  network.pingFull()
+  network.pingFull()
   network.stop()
 
 if __name__ == '__main__':

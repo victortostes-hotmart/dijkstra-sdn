@@ -1,4 +1,5 @@
-#!/usr/bin/python                                                                            
+#!/usr/bin/python
+import time;                                                                          
                                                                                              
 from mininet.topo import Topo
 from mininet.net import Mininet
@@ -80,10 +81,16 @@ def create_network():
     controller=RemoteController('c1', ip='172.16.238.12:6633' )
   )
 
-  network.start()
+  # network.start()
   # network.pingAll()
-  CLI(network);
+  # CLI(network);
   # network.stop()
+
+  network.start();
+  time.sleep(30);
+  network.pingFull();
+  network.pingFull();
+  network.stop();
 
 if __name__ == '__main__':
   setLogLevel( 'info' )  # for CLI output
