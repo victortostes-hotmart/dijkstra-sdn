@@ -2,7 +2,6 @@ from pox.core import core;
 import pox.openflow.libopenflow_01 as of;
 from pox.openflow.discovery import Discovery;
 from pox.lib.revent import *;
-from pox.lib.util import dpid_to_str;
 
 from graph import Graph;
 
@@ -46,7 +45,6 @@ class Dijkstra(EventMixin):
         
         self.TopologyGraph = Graph();
         self.switches = {};
-        # self.adjacency = defaultdict(lambda : defaultdict(lambda : None));
         self.mac_map = {};
         core.call_when_ready(startup, ('openflow','openflow_discovery'))
         print "Controller running..."
@@ -64,7 +62,7 @@ class Dijkstra(EventMixin):
         for connection in core.openflow.connections:
             connection.send(msg);
 
-    def _install(self, switch, in_port, out_port, srcEth, dstEth, data = None):
+    def _install(self, switch, in_port, out_port, dstEth, data = None):
         msg = of.ofp_flow_mod();
         msg.match.dl_dst = dstEth;
         msg.match.in_port = in_port;
@@ -75,22 +73,22 @@ class Dijkstra(EventMixin):
             msg.data = data;
         self.switches[switch].connection.send(msg);
 
-    def _install_path(self, path, srcEth, dstEth, event = None):
+    def _install_path(self, path, dstEth, event = None):
         for sw,in_port,out_port in path[::-1]:
             print("INSTALLING FLOW (dst: %s) ON %s FOR %i -> %i" % (dstEth, sw, in_port, out_port));
             if event is not None and sw == event.dpid:
-                self._install(sw, in_port, out_port, srcEth, dstEth, event.ofp);
+                self._install(sw, in_port, out_port, dstEth, event.ofp);
             else:
-                self._install(sw, in_port, out_port, srcEth, dstEth);
+                self._install(sw, in_port, out_port, dstEth);
 
     def install_path(self, path, event):
         packet = event.parsed
         # Install flow on path;
-        self._install_path(path, packet.src, packet.dst, event);
+        self._install_path(path, packet.dst, event);
 
         # Reverse path and install it backwards;
         pathReverse = [(sw,out_port,in_port) for sw,in_port,out_port in path];
-        self._install_path(pathReverse, packet.dst, packet.src);
+        self._install_path(pathReverse, packet.src);
         
     def _handle_PacketIn(self, event):
         packet = event.parsed;
@@ -125,7 +123,6 @@ class Dijkstra(EventMixin):
 
             # Flushes switches flow tables; 
             self.flush_flow_tables();
-
 
     def _handle_ConnectionDown (self, event):
         switch = self.switches.get(event.dpid);
