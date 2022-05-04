@@ -15,7 +15,7 @@ class Topology( Topo ):
   def __init__( self ):
     "My SDN topo."
 
-    # Inicializando la topologia
+    # Ini topo
     Topo.__init__( self )
 
 

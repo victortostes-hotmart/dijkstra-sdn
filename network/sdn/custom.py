@@ -1,14 +1,13 @@
 #!/usr/bin/python
 import time;                                                                          
                                                                                              
-from mininet.topo import Topo
-from mininet.net import Mininet
-from mininet.node import CPULimitedHost, Host, Node
-from mininet.cli import CLI
-from mininet.log import setLogLevel, info
-from mininet.nodelib import LinuxBridge
-from mininet.node import OVSKernelSwitch, UserSwitch 
-from mininet.node import Controller, RemoteController, OVSController
+from mininet.topo import Topo;
+from mininet.net import Mininet;
+from mininet.cli import CLI;
+from mininet.log import setLogLevel;
+from mininet.node import OVSKernelSwitch;
+from mininet.node import RemoteController;
+from mininet.link import TCLink;
 
 class Topology( Topo ):
   " SDN."
@@ -16,61 +15,61 @@ class Topology( Topo ):
   def __init__( self ):
     "My SDN topo."
 
-    # Inicializando la topologia
-    Topo.__init__( self )
+    # Ini topo
+    Topo.__init__( self );
 
     # Hosts
-    h1 = self.addHost( 'h1' )
-    h2 = self.addHost( 'h2' )
-    h3 = self.addHost( 'h3' )
-    h4 = self.addHost( 'h4' )
-    h5 = self.addHost( 'h5' )
-    h6 = self.addHost( 'h6' )
-    h7 = self.addHost( 'h7' )
-    h8 = self.addHost( 'h8' )
-    h9 = self.addHost( 'h9' )
-    h10 = self.addHost( 'h10' )
+    h1 = self.addHost('h1');
+    h2 = self.addHost('h2');
+    h3 = self.addHost('h3');
+    h4 = self.addHost('h4');
+    h5 = self.addHost('h5');
+    h6 = self.addHost('h6');
+    h7 = self.addHost('h7');
+    h8 = self.addHost('h8');
+    h9 = self.addHost('h9');
+    h10 = self.addHost('h10');
 
     # Switches
-    s1 = self.addSwitch( 's1', cls=OVSKernelSwitch )
-    s2 = self.addSwitch( 's2', cls=OVSKernelSwitch )
-    s3 = self.addSwitch( 's3', cls=OVSKernelSwitch )
-    s4 = self.addSwitch( 's4', cls=OVSKernelSwitch )
-    s5 = self.addSwitch( 's5', cls=OVSKernelSwitch )
-    s6 = self.addSwitch( 's6', cls=OVSKernelSwitch )
-    s7 = self.addSwitch( 's7', cls=OVSKernelSwitch )
-    s8 = self.addSwitch( 's8', cls=OVSKernelSwitch )
-    s9 = self.addSwitch( 's9', cls=OVSKernelSwitch )
-    s10 = self.addSwitch( 's10', cls=OVSKernelSwitch )
+    s1 = self.addSwitch('s1', cls=OVSKernelSwitch);
+    s2 = self.addSwitch('s2', cls=OVSKernelSwitch);
+    s3 = self.addSwitch('s3', cls=OVSKernelSwitch);
+    s4 = self.addSwitch('s4', cls=OVSKernelSwitch);
+    s5 = self.addSwitch('s5', cls=OVSKernelSwitch);
+    s6 = self.addSwitch('s6', cls=OVSKernelSwitch);
+    s7 = self.addSwitch('s7', cls=OVSKernelSwitch);
+    s8 = self.addSwitch('s8', cls=OVSKernelSwitch);
+    s9 = self.addSwitch('s9', cls=OVSKernelSwitch);
+    s10 = self.addSwitch('s10', cls=OVSKernelSwitch);
 
     # Links Host-Switch
-    self.addLink( h1, s1 )
-    self.addLink( h2, s2 )
-    self.addLink( h3, s3 )
-    self.addLink( h4, s4 )
-    self.addLink( h5, s5 )
-    self.addLink( h6, s6 )
-    self.addLink( h7, s7 )
-    self.addLink( h8, s8 )
-    self.addLink( h9, s9 )
-    self.addLink( h10, s10 )
+    self.addLink(h1, s1, bw=10, delay='5ms');
+    self.addLink(h2, s2, bw=10, delay='5ms');
+    self.addLink(h3, s3, bw=10, delay='5ms');
+    self.addLink(h4, s4, bw=10, delay='5ms');
+    self.addLink(h5, s5, bw=10, delay='5ms');
+    self.addLink(h6, s6, bw=10, delay='5ms');
+    self.addLink(h7, s7, bw=10, delay='5ms');
+    self.addLink(h8, s8, bw=10, delay='5ms');
+    self.addLink(h9, s9, bw=10, delay='5ms');
+    self.addLink(h10, s10, bw=10, delay='5ms');
     
     # Links Switch-Switch
-    self.addLink( s1, s2 )
-    self.addLink( s1, s8 )
-    self.addLink( s1, s10 )
-    self.addLink( s2, s3 )
-    self.addLink( s2, s6 )
-    self.addLink( s2, s7 )
-    self.addLink( s2, s8 )
-    self.addLink( s3, s4 )
-    self.addLink( s3, s6 )
-    self.addLink( s4, s5 )
-    self.addLink( s5, s6 )
-    self.addLink( s6, s7 )
-    self.addLink( s7, s8 )
-    self.addLink( s8, s9 )
-    self.addLink( s9, s10 )
+    self.addLink(s1, s2, bw=10, delay='5ms');
+    self.addLink(s1, s8, bw=10, delay='5ms');
+    self.addLink(s1, s10, bw=10, delay='5ms');
+    self.addLink(s2, s3, bw=10, delay='5ms');
+    self.addLink(s2, s6, bw=10, delay='5ms');
+    self.addLink(s2, s7, bw=10, delay='5ms');
+    self.addLink(s2, s8, bw=10, delay='5ms');
+    self.addLink(s3, s4, bw=10, delay='5ms');
+    self.addLink(s3, s6, bw=10, delay='5ms');
+    self.addLink(s4, s5, bw=10, delay='5ms');
+    self.addLink(s5, s6, bw=10, delay='5ms');
+    self.addLink(s6, s7, bw=10, delay='5ms');
+    self.addLink(s7, s8, bw=10, delay='5ms');
+    self.addLink(s8, s9, bw=10, delay='5ms');
+    self.addLink(s9, s10, bw=10, delay='5ms');
 
 
 def create_network():
@@ -78,18 +77,15 @@ def create_network():
 
   network = Mininet( 
     topo=Topology(),
+    link=TCLink,
     controller=RemoteController('c1', ip='172.16.238.12:6633' )
   )
 
-  network.start()
-  CLI(network);
-  # network.stop()
-
-  # network.start();
-  # time.sleep(30);
-  # network.pingFull();
-  # network.pingFull();
-  # network.stop();
+  network.start();
+  time.sleep(30);
+  network.pingFull();
+  network.pingFull();
+  network.stop();
 
 if __name__ == '__main__':
   setLogLevel( 'info' )  # for CLI output
