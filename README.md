@@ -48,16 +48,16 @@ Here is some examples:
 
 ```ssh
 # Triangular topology (Without controller)
-mn -c && python network/traditional/triangular.py
-
-# Custom topology with loops (Without controller)
-mn -c && python network/traditional/custom.py
+mn -c && python network/triangular/traditional.py
 
 # Triangular topology
-mn -c && python network/sdn/triangular.py
+mn -c && python network/triangular/sdn.py
+
+# Custom topology with loops (Without controller)
+mn -c && python network/custom/traditional.py
 
 # Custom topology with loops
-mn -c && python network/sdn/custom.py
+mn -c && python network/custom/sdn.py
 ```
 
 ## Benchmarking
