@@ -1,6 +1,6 @@
 #!/bin/sh 
 
-declare -a arr=('h1' 'h3')
+declare -a arr=('h1' 'h3' 'h5' 'h7' 'h9')
 
 FILE=$1
 PROTOCOL=$2
@@ -38,9 +38,9 @@ if [ $PROTOCOL = "UDP" ]; then
       set output 'results/plots/${PROTOCOL}_${i}.png';
       set title 'UDP Flow';
       set xtics 0,1,${TIME};
-      set ytics 0,1,3;
+      set ytics 0,1,5;
       set xrange[0:${TIME}];
-      set yrange[0:3];
+      set yrange[0:5];
       set xlabel 'Time (secs)';
       set ylabel 'Throughput (Mbps)';
       set y2label 'Jitter (ms)';
@@ -58,9 +58,9 @@ elif [ $PROTOCOL = "TCP" ]; then
       set output 'results/plots/${PROTOCOL}_${i}.png';
       set title 'TCP Flow';
       set xrange[0:${TIME}];
-      set yrange[0:3];
+      set yrange[0:5];
       set xtics 0,1,${TIME};
-      set ytics 0,1,3;
+      set ytics 0,1,5;
       set xlabel 'Time (secs)';
       set ylabel 'Throughput (Mbps)';
       plot 'results/${PROTOCOL}_${i}.dat' using 1:2:xtic(1) title 'Throughput' with lines;

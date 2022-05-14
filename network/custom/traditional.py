@@ -86,7 +86,8 @@ def create_network():
 
   network.start();
   network.waitConnected();
-  performance.pairs_test(network);
+  performance.pairs_test(network=network, protocol='TCP', timeInSecs=30, bw=1);
+  performance.pairs_test(network=network, protocol='UDP', timeInSecs=30, bw=1);
   network.stop();
   
 if __name__ == '__main__':

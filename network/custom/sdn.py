@@ -1,5 +1,7 @@
 #!/usr/bin/python
-import time;                                                                          
+import time;
+import sys;
+import os;                                                                       
                                                                                              
 from mininet.topo import Topo;
 from mininet.net import Mininet;
@@ -8,6 +10,9 @@ from mininet.log import setLogLevel;
 from mininet.node import OVSKernelSwitch;
 from mininet.node import RemoteController;
 from mininet.link import TCLink;
+
+sys.path.append(os.path.abspath("../commom/"));
+import performance;
 
 class Topology( Topo ):
   " SDN."
@@ -84,9 +89,8 @@ def create_network():
   network.start();
   time.sleep(30);
   network.pingFull();
-  # network.pingFull();
-  # CLI(network);
-  # perfTest(network);
+  performance.pairs_test(network=network, protocol='TCP', timeInSecs=30, bw=1);
+  performance.pairs_test(network=network, protocol='UDP', timeInSecs=30, bw=1);
   network.stop();
 
 if __name__ == '__main__':
