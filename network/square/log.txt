@@ -1,0 +1,41 @@
+# TRADITIONAL
+
+*** Ping: testing ping reachability
+h1 -> h2 h3 h4
+h2 -> h1 h3 h4
+h3 -> h1 h2 h4
+h4 -> h1 h2 h3
+*** Results:
+ h1->h2: 1/1, rtt min/avg/max/mdev 64.210/64.210/64.210/0.000 ms
+ h1->h3: 1/1, rtt min/avg/max/mdev 85.723/85.723/85.723/0.000 ms
+ h1->h4: 1/1, rtt min/avg/max/mdev 63.586/63.586/63.586/0.000 ms
+ h2->h1: 1/1, rtt min/avg/max/mdev 31.232/31.232/31.232/0.000 ms
+ h2->h3: 1/1, rtt min/avg/max/mdev 63.670/63.670/63.670/0.000 ms
+ h2->h4: 1/1, rtt min/avg/max/mdev 90.682/90.682/90.682/0.000 ms
+ h3->h1: 1/1, rtt min/avg/max/mdev 43.015/43.015/43.015/0.000 ms
+ h3->h2: 1/1, rtt min/avg/max/mdev 32.327/32.327/32.327/0.000 ms
+ h3->h4: 1/1, rtt min/avg/max/mdev 122.414/122.414/122.414/0.000 ms
+ h4->h1: 1/1, rtt min/avg/max/mdev 33.818/33.818/33.818/0.000 ms
+ h4->h2: 1/1, rtt min/avg/max/mdev 44.230/44.230/44.230/0.000 ms
+ h4->h3: 1/1, rtt min/avg/max/mdev 54.805/54.805/54.805/0.000 ms
+
+# SDN
+
+*** Ping: testing ping reachability
+h1 -> h2 h3 h4
+h2 -> h1 h3 h4
+h3 -> h1 h2 h4
+h4 -> h1 h2 h3
+*** Results:
+ h1->h2: 1/1, rtt min/avg/max/mdev 31.572/31.572/31.572/0.000 ms
+ h1->h3: 1/1, rtt min/avg/max/mdev 44.136/44.136/44.136/0.000 ms
+ h1->h4: 1/1, rtt min/avg/max/mdev 31.357/31.357/31.357/0.000 ms
+ h2->h1: 1/1, rtt min/avg/max/mdev 31.882/31.882/31.882/0.000 ms
+ h2->h3: 1/1, rtt min/avg/max/mdev 33.324/33.324/33.324/0.000 ms
+ h2->h4: 1/1, rtt min/avg/max/mdev 43.958/43.958/43.958/0.000 ms
+ h3->h1: 1/1, rtt min/avg/max/mdev 41.920/41.920/41.920/0.000 ms
+ h3->h2: 1/1, rtt min/avg/max/mdev 32.147/32.147/32.147/0.000 ms
+ h3->h4: 1/1, rtt min/avg/max/mdev 32.814/32.814/32.814/0.000 ms
+ h4->h1: 1/1, rtt min/avg/max/mdev 31.256/31.256/31.256/0.000 ms
+ h4->h2: 1/1, rtt min/avg/max/mdev 45.425/45.425/45.425/0.000 ms
+ h4->h3: 1/1, rtt min/avg/max/mdev 31.468/31.468/31.468/0.000 ms
