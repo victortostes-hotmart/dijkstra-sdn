@@ -84,7 +84,9 @@ def create_network():
   network.start();
   time.sleep(30);
   network.pingFull();
-  network.pingFull();
+  # network.pingFull();
+  # CLI(network);
+  # perfTest(network);
   network.stop();
 
 if __name__ == '__main__':

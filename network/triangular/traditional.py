@@ -1,12 +1,16 @@
 #!/usr/bin/python
-import time;                                                                           
-                                                                                             
+import sys;
+import os;
+
 from mininet.topo import Topo;
 from mininet.net import Mininet;
 from mininet.node import OVSBridge;
 from mininet.cli import CLI;
 from mininet.log import setLogLevel;
 from mininet.link import TCLink;
+
+sys.path.append(os.path.abspath("../commom/"));
+import performance;
 
 class Topology( Topo ):
   "Traditional."
@@ -47,10 +51,11 @@ def create_network():
   )
 
   network.start();
-  # time.sleep(30);
   network.waitConnected();
-  network.pingFull();
-  network.pingFull();
+
+  performance.test(network);
+
+  CLI(network);
   network.stop();
 
 if __name__ == '__main__':

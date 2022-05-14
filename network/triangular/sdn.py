@@ -1,6 +1,6 @@
 #!/usr/bin/python
-import time;                                                                          
-                                                                                             
+import time;
+
 from mininet.topo import Topo;
 from mininet.net import Mininet;
 from mininet.cli import CLI;
@@ -50,8 +50,9 @@ def create_network():
   network.start();
   time.sleep(30);
   # network.waitConnected();
-  network.pingFull();
-  network.pingFull();
+  # network.pingFull();
+  # network.pingFull();
+  CLI(network);
   network.stop();
   
 
