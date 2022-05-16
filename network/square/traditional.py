@@ -9,7 +9,7 @@ from mininet.log import setLogLevel;
 from mininet.node import OVSBridge;
 from mininet.link import TCLink;
 
-sys.path.append(os.path.abspath("../commom/"));
+sys.path.append(os.path.abspath("./network/commom/"));
 import performance;
 
 class Topology( Topo ):
@@ -26,7 +26,6 @@ class Topology( Topo ):
     h2 = self.addHost('h2');
     h3 = self.addHost('h3');
     h4 = self.addHost('h4');
-
 
     # Switches
     s1 = self.addSwitch('s1', cls=OVSBridge, stp=1);
@@ -59,9 +58,9 @@ def create_network():
 
   network.start();
   network.waitConnected();
-  performance.pairs_test(network=network, protocol='TCP', timeInSecs=30, bw=1);
-  performance.pairs_test(network=network, protocol='UDP', timeInSecs=30, bw=1);
-  # network.pingFull();
+  network.pingFull();
+  # performance.full_test(network=network, protocol='TCP', timeInSecs=30, bw=0.25, folder='network/custom/results/TRADITIONAL');
+  performance.full_test(network=network, protocol='UDP', timeInSecs=30, bw=0.25, folder='network/custom/results/TRADITIONAL');
   network.stop();
   
 if __name__ == '__main__':

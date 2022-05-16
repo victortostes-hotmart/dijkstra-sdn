@@ -11,7 +11,7 @@ from mininet.node import OVSKernelSwitch;
 from mininet.node import RemoteController;
 from mininet.link import TCLink;
 
-sys.path.append(os.path.abspath("../commom/"));
+sys.path.append(os.path.abspath("./network/commom/"));
 import performance;
 
 class Topology( Topo ):
@@ -22,7 +22,6 @@ class Topology( Topo ):
 
     # Ini topo
     Topo.__init__( self )
-
 
     # Hosts
     h1 = self.addHost('h1');
@@ -60,10 +59,10 @@ def create_network():
 
   network.start();
   time.sleep(30);
-  # network.waitConnected()
-  performance.pairs_test(network=network, protocol='TCP', timeInSecs=30, bw=1);
-  performance.pairs_test(network=network, protocol='UDP', timeInSecs=30, bw=1);
-  CLI(network);
+  # network.waitConnected();
+  network.pingFull();
+  # performance.full_test(network=network, protocol='TCP', timeInSecs=30, bw=0.25, folder='network/square/results/SDN');
+  performance.full_test(network=network, protocol='UDP', timeInSecs=30, bw=0.25, folder='network/square/results/SDN');
   network.stop();
   
 

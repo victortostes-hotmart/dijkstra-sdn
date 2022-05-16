@@ -1,3 +1,4 @@
+import os;
 from time import sleep;
 from mininet.util import quietRun;
 
@@ -9,19 +10,26 @@ def round_robin(l, n=2):
     i = (i + 1) % n;
   return lists;
 
-def build_commands(servers, clients, protocol, timeInSecs, bw):
-  clientCommands = [];
-  serverCommands = [];
+def prepare_test(folder):
+  if not os.path.exists(folder):
+    os.makedirs(folder)
   
-  for client, server in zip(clients, servers[::-1]):
-    if protocol is 'UDP':
-      serverCommands.append((server, 'iperf -s -u -i 1 > %s_%s.txt' % (protocol, client.name)))
-      clientCommands.append((client, 'iperf -c %s -t %d -i 1 -u -b %sM' % (server.IP(), timeInSecs, bw)))
-    elif protocol is 'TCP':
-      serverCommands.append((server, 'iperf -s -i 1 > %s_%s.txt' % (protocol, client.name)))
-      clientCommands.append((client, 'iperf -c %s -t %d -i 1 -b %sM' % (server.IP(), timeInSecs, bw)))
+  quietRun('pkill -9 iperf');
 
-  return serverCommands, clientCommands;
+def build_server_command(server, protocol, folder):
+  if protocol is 'UDP':
+    return 'iperf -s -e -u -i 1 > %s/%s_%s.txt' % (folder, protocol, server.name);
+  
+  elif protocol is 'TCP':
+    return 'iperf -s -i 1 > %s/%s_%s.txt' % (folder, protocol, server.name);
+
+def build_client_command(server, protocol, bw, timeInSecs, folder):
+  if protocol is 'UDP':
+    return 'iperf -c %s -t %d -i 1 -e -u -b %sM' % (server.IP(), timeInSecs, bw);
+  
+  elif protocol is 'TCP':
+    return 'iperf -c %s -t %d -i 1 -b %sM' % (server.IP(), timeInSecs, bw);
+  
 
 def start_test(network, serverCommands, clientCommands, timeInSecs):
   print("Starting Servers");
@@ -37,45 +45,38 @@ def start_test(network, serverCommands, clientCommands, timeInSecs):
 
   print("Waiting...");
 
-  sleep(timeInSecs);
+  sleep(timeInSecs + 5);
 
   for pid in pids:
     pid.kill();
 
+  quietRun('pkill -9 iperf');
   print("Done..");
 
 
-def pairs_test(network=None, protocol='TCP', timeInSecs=15, bw=1):
-  quietRun('pkill -9 iperf');
-
+def pairs_test(network=None, protocol='TCP', timeInSecs=15, bw=1, folder=None):
+  prepare_test(folder);
+  
   clients, servers = round_robin(network.hosts);
 
-  serverCommands, clientCommands = build_commands(servers, clients[::-1], protocol, timeInSecs, bw);
-  start_test(network, serverCommands, clientCommands, timeInSecs);
+  clientCommands = [];
+  serverCommands = [];
+  for client, server in zip(clients[::-1], servers):
+    clientCommands.append((client, build_client_command(server, protocol, bw, timeInSecs, folder)));
+    serverCommands.append((server, build_server_command(server, protocol, folder)));
   
+  start_test(network, serverCommands, clientCommands, timeInSecs);
 
 
-# def test(network):
-#   quietRun('pkill -9 iperf');
+def full_test(network=None, protocol='TCP', timeInSecs=15, bw=1, folder=None):
+  prepare_test(folder);
 
-#   clients, servers = round_robin(network.hosts);
-
-#   print("Starting Servers");
-
-#   for host in servers:
-#     host.popen('iperf -s -u -i 1 > iperf_%s.txt' % (host.name), shell=True );
-
-#   print("Starting Clients");
-
-#   for client in clients:
-#     for server in servers:
-#       # cmd = 'iperf -c %s -t %d -i 1 -u -b %sM > iperf_%s_%s.txt' % (server.IP(), seconds, bw, client.name, server.name)
-#       cmd = 'iperf -c %s -t %d -i 1 -u -b %sM' % (server.IP(), seconds, bw)
-#       client.popen(cmd, shell=True );
-
-#   print("Waiting...");
-
-#   for host in network.hosts:
-#     host.monitor();
-
-#   print("Done..");
+  clientCommands = [];
+  serverCommands = [];
+  for server in network.hosts:
+    serverCommands.append((server, build_server_command(server, protocol, folder)));
+    for client in network.hosts:
+      if client != server:
+        clientCommands.append((client, build_client_command(server, protocol, bw, timeInSecs, folder)));
+  
+  start_test(network, serverCommands, clientCommands, timeInSecs);

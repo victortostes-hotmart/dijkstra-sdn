@@ -66,6 +66,13 @@ Comparing built controller with traditional Ethernet network packet forwarding s
 
 To be defined.
 
+```ssh
+# Custom topology with loops
+./network/database_generator.sh network/custom/results/TRADITIONAL 10
+
+./network/database_generator.sh network/custom/results/SDN 10
+```
+
 <sub>
 Authored by Victor Tostes - UFMG
 </sub>

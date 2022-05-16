@@ -5,6 +5,7 @@ declare -a arr=('h1' 'h3' 'h5' 'h7' 'h9')
 FILE=$1
 PROTOCOL=$2
 TIME=$3
+SUFFIX=$4
 
 if [ ! -d $FILE ]
 then
@@ -25,26 +26,26 @@ then
 fi
 
 cd $FILE;
-# rm -Rf results
-mkdir -p results
-mkdir -p results/plots
+mkdir -p plots
 
 if [ $PROTOCOL = "UDP" ]; then
   for i in "${arr[@]}"
   do
-    cat ${PROTOCOL}_${i}.txt | grep sec | head -${TIME} | tr - " " | awk '{print $4, $8, $10}' > results/${PROTOCOL}_${i}.dat
+    cat ${PROTOCOL}_${i}.txt | grep sec | head -${TIME} | tr - " " | awk '{print $4, $8, $10}' > ${PROTOCOL}_${i}.dat
     gnuplot -e "
       set terminal png;
-      set output 'results/plots/${PROTOCOL}_${i}.png';
+      set output 'plots/${PROTOCOL}_${i}.png';
       set title 'UDP Flow';
       set xtics 0,1,${TIME};
-      set ytics 0,1,5;
+      set ytics 0,1,10;
       set xrange[0:${TIME}];
-      set yrange[0:5];
+      set yrange[0:10];
+      set y2tics 0,0.1,1;
+      set y2range[0:1];
       set xlabel 'Time (secs)';
       set ylabel 'Throughput (Mbps)';
       set y2label 'Jitter (ms)';
-      plot 'results/${PROTOCOL}_${i}.dat' using 1:2:xtic(1) title 'Throughput' with lines, \
+      plot '${PROTOCOL}_${i}.dat' using 1:2:xtic(1) title 'Throughput' with lines, \
                                   '' using 1:3:xtic(1) title 'Jitter' with lines;
     "
   done
@@ -52,10 +53,10 @@ if [ $PROTOCOL = "UDP" ]; then
 elif [ $PROTOCOL = "TCP" ]; then
   for i in "${arr[@]}"
   do
-    cat ${PROTOCOL}_${i}.txt | grep sec | head -${TIME} | tr - " " | awk '{print $4, $8}' > results/${PROTOCOL}_${i}.dat
+    cat ${PROTOCOL}_${i}.txt | grep sec | head -${TIME} | tr - " " | awk '{print $4, $8}' > ${PROTOCOL}_${i}.dat
     gnuplot -e "
       set terminal png;
-      set output 'results/plots/${PROTOCOL}_${i}.png';
+      set output 'plots/${PROTOCOL}_${i}.png';
       set title 'TCP Flow';
       set xrange[0:${TIME}];
       set yrange[0:5];
@@ -63,7 +64,7 @@ elif [ $PROTOCOL = "TCP" ]; then
       set ytics 0,1,5;
       set xlabel 'Time (secs)';
       set ylabel 'Throughput (Mbps)';
-      plot 'results/${PROTOCOL}_${i}.dat' using 1:2:xtic(1) title 'Throughput' with lines;
+      plot '${PROTOCOL}_${i}.dat' using 1:2:xtic(1) title 'Throughput' with lines;
     "
   done
 else
