@@ -64,7 +64,7 @@ mn -c && python network/custom/sdn.py
 
 Comparing built controller with traditional Ethernet network packet forwarding strategy using STP protocol.
 
-To be defined.
+After running a performance test, generate `csv` database:
 
 ```ssh
 # Custom topology with loops
