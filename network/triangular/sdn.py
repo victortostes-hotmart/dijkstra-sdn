@@ -57,8 +57,8 @@ def create_network():
   # network.waitConnected();
   # network.pingFull();
   network.pingFull();
-  # performance.full_test(network=network, protocol='TCP', timeInSecs=30, bw=1, folder='network/triangular/results/SDN');
-  performance.full_test(network=network, protocol='UDP', timeInSecs=30, bw=0.1, folder='network/triangular/results/SDN');
+  performance.full_test(network=network, protocol='TCP', timeInSecs=30, bw=5, folder='network/triangular/results/SDN');
+  performance.full_test(network=network, protocol='UDP', timeInSecs=30, bw=5, folder='network/triangular/results/SDN');
 
   network.stop();
   

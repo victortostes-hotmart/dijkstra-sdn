@@ -52,8 +52,8 @@ def create_network():
 
   network.start();
   network.waitConnected();
-  # performance.full_test(network=network, protocol='TCP', timeInSecs=30, bw=1, folder='network/triangular/results/TRADITIONAL');
-  performance.full_test(network=network, protocol='UDP', timeInSecs=30, bw=0.1, folder='network/triangular/results/TRADITIONAL')
+  performance.full_test(network=network, protocol='TCP', timeInSecs=30, bw=5, folder='network/triangular/results/TRADITIONAL');
+  performance.full_test(network=network, protocol='UDP', timeInSecs=30, bw=5, folder='network/triangular/results/TRADITIONAL')
 
   network.stop();
 

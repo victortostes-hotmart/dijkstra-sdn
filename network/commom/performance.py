@@ -18,17 +18,17 @@ def prepare_test(folder):
 
 def build_server_command(server, protocol, folder):
   if protocol is 'UDP':
-    return 'iperf -s -e -u -i 1 > %s/%s_%s.txt' % (folder, protocol, server.name);
+    return 'iperf -s -e -u -i 1 -f m > %s/%s_%s.txt' % (folder, protocol, server.name);
   
   elif protocol is 'TCP':
-    return 'iperf -s -i 1 > %s/%s_%s.txt' % (folder, protocol, server.name);
+    return 'iperf -s -i 1 -f m > %s/%s_%s.txt' % (folder, protocol, server.name);
 
-def build_client_command(server, protocol, bw, timeInSecs, folder):
+def build_client_command(server, protocol, bw, timeInSecs):
   if protocol is 'UDP':
     return 'iperf -c %s -t %d -i 1 -e -u -b %sM' % (server.IP(), timeInSecs, bw);
   
   elif protocol is 'TCP':
-    return 'iperf -c %s -t %d -i 1 -b %sM' % (server.IP(), timeInSecs, bw);
+    return 'iperf -c %s -t %d -i 1 -b %sM -f' % (server.IP(), timeInSecs, bw);
   
 
 def start_test(network, serverCommands, clientCommands, timeInSecs):
@@ -62,7 +62,7 @@ def pairs_test(network=None, protocol='TCP', timeInSecs=15, bw=1, folder=None):
   clientCommands = [];
   serverCommands = [];
   for client, server in zip(clients[::-1], servers):
-    clientCommands.append((client, build_client_command(server, protocol, bw, timeInSecs, folder)));
+    clientCommands.append((client, build_client_command(server, protocol, bw, timeInSecs)));
     serverCommands.append((server, build_server_command(server, protocol, folder)));
   
   start_test(network, serverCommands, clientCommands, timeInSecs);
@@ -77,6 +77,6 @@ def full_test(network=None, protocol='TCP', timeInSecs=15, bw=1, folder=None):
     serverCommands.append((server, build_server_command(server, protocol, folder)));
     for client in network.hosts:
       if client != server:
-        clientCommands.append((client, build_client_command(server, protocol, bw, timeInSecs, folder)));
+        clientCommands.append((client, build_client_command(server, protocol, bw, timeInSecs)));
   
   start_test(network, serverCommands, clientCommands, timeInSecs);

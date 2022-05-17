@@ -48,33 +48,33 @@ class Topology( Topo ):
     s10 = self.addSwitch('s10', cls=OVSKernelSwitch);
 
     # Links Host-Switch
-    self.addLink(h1, s1, bw=10, delay='5ms');
-    self.addLink(h2, s2, bw=10, delay='5ms');
-    self.addLink(h3, s3, bw=10, delay='5ms');
-    self.addLink(h4, s4, bw=10, delay='5ms');
-    self.addLink(h5, s5, bw=10, delay='5ms');
-    self.addLink(h6, s6, bw=10, delay='5ms');
-    self.addLink(h7, s7, bw=10, delay='5ms');
-    self.addLink(h8, s8, bw=10, delay='5ms');
-    self.addLink(h9, s9, bw=10, delay='5ms');
-    self.addLink(h10, s10, bw=10, delay='5ms');
+    self.addLink(h1, s1, bw=10, delay='5ms', loss=1);
+    self.addLink(h2, s2, bw=10, delay='5ms', loss=1);
+    self.addLink(h3, s3, bw=10, delay='5ms', loss=1);
+    self.addLink(h4, s4, bw=10, delay='5ms', loss=1);
+    self.addLink(h5, s5, bw=10, delay='5ms', loss=1);
+    self.addLink(h6, s6, bw=10, delay='5ms', loss=1);
+    self.addLink(h7, s7, bw=10, delay='5ms', loss=1);
+    self.addLink(h8, s8, bw=10, delay='5ms', loss=1);
+    self.addLink(h9, s9, bw=10, delay='5ms', loss=1);
+    self.addLink(h10, s10, bw=10, delay='5ms', loss=1);
     
     # Links Switch-Switch
-    self.addLink(s1, s2, bw=10, delay='5ms');
-    self.addLink(s1, s8, bw=10, delay='5ms');
-    self.addLink(s1, s10, bw=10, delay='5ms');
-    self.addLink(s2, s3, bw=10, delay='5ms');
-    self.addLink(s2, s6, bw=10, delay='5ms');
-    self.addLink(s2, s7, bw=10, delay='5ms');
-    self.addLink(s2, s8, bw=10, delay='5ms');
-    self.addLink(s3, s4, bw=10, delay='5ms');
-    self.addLink(s3, s6, bw=10, delay='5ms');
-    self.addLink(s4, s5, bw=10, delay='5ms');
-    self.addLink(s5, s6, bw=10, delay='5ms');
-    self.addLink(s6, s7, bw=10, delay='5ms');
-    self.addLink(s7, s8, bw=10, delay='5ms');
-    self.addLink(s8, s9, bw=10, delay='5ms');
-    self.addLink(s9, s10, bw=10, delay='5ms');
+    self.addLink(s1, s2, bw=10, delay='5ms', loss=1);
+    self.addLink(s1, s8, bw=10, delay='5ms', loss=1);
+    self.addLink(s1, s10, bw=10, delay='5ms', loss=1);
+    self.addLink(s2, s3, bw=10, delay='5ms', loss=1);
+    self.addLink(s2, s6, bw=10, delay='5ms', loss=1);
+    self.addLink(s2, s7, bw=10, delay='5ms', loss=1);
+    self.addLink(s2, s8, bw=10, delay='5ms', loss=1);
+    self.addLink(s3, s4, bw=10, delay='5ms', loss=1);
+    self.addLink(s3, s6, bw=10, delay='5ms', loss=1);
+    self.addLink(s4, s5, bw=10, delay='5ms', loss=1);
+    self.addLink(s5, s6, bw=10, delay='5ms', loss=1);
+    self.addLink(s6, s7, bw=10, delay='5ms', loss=1);
+    self.addLink(s7, s8, bw=10, delay='5ms', loss=1);
+    self.addLink(s8, s9, bw=10, delay='5ms', loss=1);
+    self.addLink(s9, s10, bw=10, delay='5ms', loss=1);
 
 
 def create_network():
@@ -89,8 +89,8 @@ def create_network():
   network.start();
   time.sleep(30);
   network.pingFull();
-  # performance.full_test(network=network, protocol='TCP', timeInSecs=30, bw=1, folder='network/custom/results/SDN');
-  performance.full_test(network=network, protocol='UDP', timeInSecs=30, bw=0.25, folder='network/custom/results/SDN');
+  performance.full_test(network=network, protocol='TCP', timeInSecs=30, bw=1, folder='network/custom/results/SDN');
+  performance.full_test(network=network, protocol='UDP', timeInSecs=30, bw=1, folder='network/custom/results/SDN');
   network.stop();
 
 if __name__ == '__main__':

@@ -17,6 +17,7 @@ fi
 
 cd $FOLDER;
 rm -f database_UDP.csv;
+rm -f database_TCP.csv;
 
 counter=1
 until [ $counter -gt $SERVERS ]
@@ -26,6 +27,7 @@ do
     cat UDP_h${counter}.txt \
       | grep sec \
       | awk '!/out-of-order/' \
+      | awk '!/-\/-\/-\/-/' \
       | tr -d ']%()' \
       | sed -e "s/\/ /\//2" \
       | awk '{
@@ -38,10 +40,23 @@ do
     >> database_UDP.csv 
   fi
 
-  # if [ -f "TCP_h$counter.txt" ]
-  # then
-  #   cat TCP_h${counter}.txt | grep sec | awk '!/out-of-order/' | sed -e "s/^/H$counter TCP /" >> database.txt
-  # fi
+  if [ -f "TCP_h$counter.txt" ]
+  then
+    cat TCP_h${counter}.txt \
+      | grep sec \
+      | awk '!/out-of-order/' \
+      | awk '!/out-of-order/' \
+      | tr -d ']%()' \
+      | sed -e "s/- /-/g" \
+      | awk '{
+        split($3,a,"-"); 
+        split($14,b,"/"); 
+        print $2,a[1],a[2],$5,$6,$7,$8}
+      ' \
+      | sed -e "s/^/H$counter TCP /" \
+      | tr -s '[:blank:]' ',' \
+    >> database_TCP.csv 
+  fi
   
   ((counter++))
 done
