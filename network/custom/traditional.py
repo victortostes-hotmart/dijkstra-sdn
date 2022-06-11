@@ -58,21 +58,21 @@ class Topology( Topo ):
     self.addLink(h10, s10, bw=10, delay='5ms', loss=1);
     
     # Links Switch-Switch
-    self.addLink(s1, s2, bw=10, delay='5ms', loss=1);
-    self.addLink(s1, s8, bw=10, delay='5ms', loss=1);
-    self.addLink(s1, s10, bw=10, delay='5ms', loss=1);
-    self.addLink(s2, s3, bw=10, delay='5ms', loss=1);
-    self.addLink(s2, s6, bw=10, delay='5ms', loss=1);
-    self.addLink(s2, s7, bw=10, delay='5ms', loss=1);
-    self.addLink(s2, s8, bw=10, delay='5ms', loss=1);
-    self.addLink(s3, s4, bw=10, delay='5ms', loss=1);
-    self.addLink(s3, s6, bw=10, delay='5ms', loss=1);
-    self.addLink(s4, s5, bw=10, delay='5ms', loss=1);
-    self.addLink(s5, s6, bw=10, delay='5ms', loss=1);
-    self.addLink(s6, s7, bw=10, delay='5ms', loss=1);
-    self.addLink(s7, s8, bw=10, delay='5ms', loss=1);
-    self.addLink(s8, s9, bw=10, delay='5ms', loss=1);
-    self.addLink(s9, s10, bw=10, delay='5ms', loss=1);
+    self.addLink(s1, s2, bw=10, delay='15ms', loss=1);
+    self.addLink(s1, s8, bw=10, delay='15ms', loss=1);
+    self.addLink(s1, s10, bw=10, delay='15ms', loss=1);
+    self.addLink(s2, s3, bw=10, delay='15ms', loss=1);
+    self.addLink(s2, s6, bw=10, delay='15ms', loss=1);
+    self.addLink(s2, s7, bw=10, delay='15ms', loss=1);
+    self.addLink(s2, s8, bw=10, delay='15ms', loss=1);
+    self.addLink(s3, s4, bw=10, delay='15ms', loss=1);
+    self.addLink(s3, s6, bw=10, delay='15ms', loss=1);
+    self.addLink(s4, s5, bw=10, delay='15ms', loss=1);
+    self.addLink(s5, s6, bw=10, delay='15ms', loss=1);
+    self.addLink(s6, s7, bw=10, delay='15ms', loss=1);
+    self.addLink(s7, s8, bw=10, delay='15ms', loss=1);
+    self.addLink(s8, s9, bw=10, delay='15ms', loss=1);
+    self.addLink(s9, s10, bw=10, delay='15ms', loss=1);
 
 
 def create_network():
@@ -87,8 +87,9 @@ def create_network():
   network.start();
   network.waitConnected();
   network.pingFull();
-  performance.full_test(network=network, protocol='TCP', timeInSecs=180, bw=0.33, folder='network/custom/results/TRADITIONAL');
-  performance.full_test(network=network, protocol='UDP', timeInSecs=180, bw=0.33, folder='network/custom/results/TRADITIONAL');
+  network.pingFull();
+  # performance.full_test(network=network, protocol='TCP', timeInSecs=200, bw=0.3, folder='network/custom/results/TRADITIONAL');
+  # performance.full_test(network=network, protocol='UDP', timeInSecs=200, bw=0.3, folder='network/custom/results/TRADITIONAL');
   network.stop();
   
 if __name__ == '__main__':
