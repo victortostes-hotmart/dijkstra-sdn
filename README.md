@@ -73,6 +73,38 @@ After running a performance test, generate `csv` database:
 ./network/database_generator.sh network/custom/results/SDN 10
 ```
 
+## Results
+
+A sample data analisys Jupyter Notebook (`analisys.ipynb`) comparing traditional approch and software definition is shown: 
+
+#### Bandwidth TCP
+
+![tcp_bw](doc/results_examples/tcp_bw.png)
+
+#### Thoughput TCP
+
+![tcp_transfer](doc/results_examples/tcp_transfer.png)
+
+#### Bandwidth UDP
+
+![udp_tcp](doc/results_examples/udp_bw.png)
+
+#### Thoughput UDP
+
+![udp_transfer](doc/results_examples/udp_transfer.png)
+
+#### Latency UDP
+
+![udp_bw](doc/results_examples/udp_latency.png)
+
+#### Jitter UDP
+
+![udp_transfer](doc/results_examples/udp_jitter.png)
+
+#### Loss ratio UDP
+
+![udp_tcp](doc/results_examples/udp_loss.png)
+
 <sub>
 Authored by Victor Tostes - UFMG
 </sub>

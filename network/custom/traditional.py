@@ -88,8 +88,8 @@ def create_network():
   network.waitConnected();
   network.pingFull();
   network.pingFull();
-  # performance.full_test(network=network, protocol='TCP', timeInSecs=200, bw=0.3, folder='network/custom/results/TRADITIONAL');
-  # performance.full_test(network=network, protocol='UDP', timeInSecs=200, bw=0.3, folder='network/custom/results/TRADITIONAL');
+  performance.full_test(network=network, protocol='TCP', timeInSecs=200, bw=0.3, folder='network/custom/results/TRADITIONAL3');
+  performance.full_test(network=network, protocol='UDP', timeInSecs=200, bw=0.3, folder='network/custom/results/TRADITIONAL3');
   network.stop();
   
 if __name__ == '__main__':

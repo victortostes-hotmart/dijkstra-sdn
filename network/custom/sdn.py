@@ -90,8 +90,8 @@ def create_network():
   time.sleep(30);
   network.pingFull();
   
-  # performance.full_test(network=network, protocol='TCP', timeInSecs=200, bw=0.3, folder='network/custom/results/SDN');
-  # performance.full_test(network=network, protocol='UDP', timeInSecs=200, bw=0.3, folder='network/custom/results/SDN');
+  performance.full_test(network=network, protocol='TCP', timeInSecs=200, bw=0.3, folder='network/custom/results/SDN3');
+  performance.full_test(network=network, protocol='UDP', timeInSecs=200, bw=0.3, folder='network/custom/results/SDN3');
   network.stop();
 
 if __name__ == '__main__':
